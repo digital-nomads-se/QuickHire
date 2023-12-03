@@ -1,7 +1,7 @@
 import ConnectDB from '@/DB/connectDB';
 import Job from '@/models/Job';
 
-
+const { user, errorMsg, isLoading } = useUser();
 
 export default async (req, res) => {
     await ConnectDB();
@@ -21,7 +21,7 @@ export default async (req, res) => {
 const getSpecifiedJob = async (req, res) => {
     await ConnectDB();
     const data = req.query;
-    const id = data?.id
+    const id = user?.id
 
     if (!id) return res.status(400).json({ success: false, message: "Please Login" })
 
