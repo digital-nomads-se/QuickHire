@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 
 
@@ -30,8 +30,10 @@ export default function App({
     };
   }, [router]);
   return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
+    <UserProvider>
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
+    </UserProvider>
   )
 }

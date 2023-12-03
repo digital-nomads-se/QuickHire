@@ -6,10 +6,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { post_job } from '@/Services/job';
 import { useRouter } from 'next/router'
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 
 export default function PostAJob() {
-    const user = useSelector(state => state.User.userData)
+    const { user, errorMsg, isLoading } = useUser();
     const router = useRouter();
 
     const [formData, setFormData] = useState({ user: user?._id, title: "", salary: 0, email: "", company: "", description: "", job_category: "", job_type: "", job_experience: "", job_vacancy: 0, job_deadline: "" });
@@ -66,7 +67,7 @@ export default function PostAJob() {
             return;
         }
 
-        if (formData.user == null) {
+        if (user == null) {
             return toast.error("Please Login First");
         }
 
