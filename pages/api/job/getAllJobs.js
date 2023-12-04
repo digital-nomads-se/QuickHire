@@ -1,7 +1,19 @@
+/**
+ * @openapi
+ * /api/getAllJobs:
+ *   get:
+ *     summary: Get all jobs
+ *     responses:
+ *       '200':
+ *         description: Jobs fetched successfully
+ *       '400':
+ *         description: Invalid request
+ *       '500':
+ *         description: Something went wrong, please retry login
+ */
+
 import ConnectDB from '@/DB/connectDB';
 import Job from '@/models/Job';
-
-
 
 export default async (req, res) => {
     await ConnectDB();

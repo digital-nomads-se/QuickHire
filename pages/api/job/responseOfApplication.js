@@ -1,3 +1,28 @@
+/**
+ * @openapi
+ * /api/responseOfApplication:
+ *   put:
+ *     summary: Update the status of a job application
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               status: 
+ *                 type: string
+ *               id: 
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: Status updated successfully
+ *       '400':
+ *         description: Invalid request or not logged in
+ *       '403':
+ *         description: Something went wrong, please retry login
+ */
+
 import ConnectDB from '@/DB/connectDB';
 import validateToken from '@/middleware/tokenValidation';
 import AppliedJob from '@/models/ApplyJob';

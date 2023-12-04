@@ -1,3 +1,48 @@
+/**
+ * @openapi
+ * /api/bookmark:
+ *   post:
+ *     summary: Bookmark a job
+ *     responses:
+ *       '200':
+ *         description: Job bookmarked successfully
+ *       '500':
+ *         description: Something went wrong, please retry login
+ * 
+ * /api/bookmark:
+ *   get:
+ *     summary: Get bookmarked jobs
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Job bookmarked successfully
+ *       '500':
+ *         description: Something went wrong, please retry later
+ * 
+ * /api/bookmark:
+ *   delete:
+ *     summary: Delete a bookmarked job
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: Job removed successfully
+ *       '500':
+ *         description: Something went wrong, please retry later
+ */
+
 import ConnectDB from '@/DB/connectDB';
 import validateToken from '@/middleware/tokenValidation';
 import bookMarkJob from '@/models/Bookmark';

@@ -1,3 +1,47 @@
+/**
+ * @openapi
+ * /api/postAJob:
+ *   post:
+ *     summary: Post a job
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title: 
+ *                 type: string
+ *               description: 
+ *                 type: string
+ *               user: 
+ *                 type: string
+ *               email: 
+ *                 type: string
+ *               company: 
+ *                 type: string
+ *               job_category: 
+ *                 type: string
+ *               job_type: 
+ *                 type: string
+ *               job_experience: 
+ *                 type: string
+ *               job_vacancy: 
+ *                 type: integer
+ *               job_deadline: 
+ *                 type: string
+ *                 format: date-time
+ *               salary: 
+ *                 type: integer
+ *     responses:
+ *       '200':
+ *         description: Job posted successfully
+ *       '400':
+ *         description: Invalid request or not logged in
+ *       '500':
+ *         description: Something went wrong, please retry login
+ */
+
 import ConnectDB from '@/DB/connectDB';
 import validateToken from '@/middleware/tokenValidation';
 import Job from '@/models/Job';

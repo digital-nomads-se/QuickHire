@@ -1,3 +1,23 @@
+/**
+ * @openapi
+ * /api/getPostedJobs:
+ *   get:
+ *     summary: Get all jobs posted by a specific user
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Posted jobs fetched successfully
+ *       '400':
+ *         description: Invalid request or not logged in
+ *       '403':
+ *         description: Something went wrong, please retry login
+ */
+
 import ConnectDB from '@/DB/connectDB';
 import validateToken from '@/middleware/tokenValidation';
 import Job from '@/models/Job';

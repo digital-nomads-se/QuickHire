@@ -1,9 +1,33 @@
+/**
+ * @openapi
+ * /api/getAllApplicationsOfSpecifiedJob:
+ *   get:
+ *     summary: Get all applications of a specified job
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Applications fetched successfully
+ *       '400':
+ *         description: Invalid request or not logged in
+ *       '403':
+ *         description: Something went wrong, please retry login
+ * securitySchemes:
+ *   BearerAuth:
+ *     type: http
+ *     scheme: bearer
+ *     bearerFormat: JWT
+ */
+
 import ConnectDB from '@/DB/connectDB';
 import validateToken from '@/middleware/tokenValidation';
 import AppliedJob from '@/models/ApplyJob';
-
-
-
 
 export default async (req, res) => {
     await ConnectDB();
