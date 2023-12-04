@@ -1,3 +1,36 @@
+/**
+ * @openapi
+ * /api/applyJob:
+ *   post:
+ *     summary: Apply for a job
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               about:
+ *                 type: string
+ *               job:
+ *                 type: string
+ *               user:
+ *                 type: string
+ *               cv:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: Job application submitted successfully
+ *       '401':
+ *         description: Unauthorized, invalid input
+ *       '500':
+ *         description: Something went wrong, please retry
+ */
+
 import ConnectDB from '@/DB/connectDB';
 import Joi from 'joi';
 import AppliedJob from '@/models/ApplyJob';
@@ -35,8 +68,6 @@ export default async (req, res) => {
             res.status(400).json({ success: false, message: 'Invalid Request' });
     }
 }
-
-
 
 const applyToJob =  async (req, res) => {
     await ConnectDB();

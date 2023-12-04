@@ -1,8 +1,26 @@
+/**
+ * @openapi
+ * /api/getAppliedJobs:
+ *   get:
+ *     summary: Get all jobs applied by a specific user
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Applied jobs fetched successfully
+ *       '400':
+ *         description: Invalid request or not logged in
+ *       '500':
+ *         description: Something went wrong, please retry login
+ */
+
 import ConnectDB from '@/DB/connectDB';
 import validateToken from '@/middleware/tokenValidation';
 import ApplyJob from '@/models/ApplyJob';
-
-
 
 export default async (req, res) => {
     await ConnectDB();

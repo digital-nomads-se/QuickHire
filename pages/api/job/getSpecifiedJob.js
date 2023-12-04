@@ -1,3 +1,23 @@
+/**
+ * @openapi
+ * /api/getSpecifiedJob:
+ *   get:
+ *     summary: Get a specific job
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Job fetched successfully
+ *       '400':
+ *         description: Invalid request or not logged in
+ *       '403':
+ *         description: Something went wrong, please retry login
+ */
+
 import ConnectDB from '@/DB/connectDB';
 import Job from '@/models/Job';
 import useUser from '@auth0/nextjs-auth0/client';// Replace 'path-to-useUser' with the correct path to your useUser hook

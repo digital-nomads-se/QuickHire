@@ -1,3 +1,23 @@
+/**
+ * @openapi
+ * /api/getApplicationDetail:
+ *   get:
+ *     summary: Get details of a specific job application
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Application details fetched successfully
+ *       '400':
+ *         description: Invalid request or not logged in
+ *       '403':
+ *         description: Something went wrong, please retry login
+ */
+
 import ConnectDB from '@/DB/connectDB';
 import validateToken from '@/middleware/tokenValidation';
 import AppliedJob from '@/models/ApplyJob';
