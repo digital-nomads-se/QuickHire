@@ -40,6 +40,8 @@ import path from 'path'
 import crypto from 'crypto';
 import validateToken from '@/middleware/tokenValidation';
 
+const kafkaProcessApplication = require('../../Services/kafka/processJobApplication');
+
 const schema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
@@ -124,9 +126,8 @@ const applyToJob =  async (req, res) => {
             if (error) return res.status(401).json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') });
 
             const newJobApplication = AppliedJob.create(jobApplication);
+            kafkaProcessApplication.processApplication(jobApplication.user, jobApplication.job, newPath);
             return res.status(200).json({ success: true, message: 'Job application submitted successfully !' });
-
-
         })
     } catch (error) {
 

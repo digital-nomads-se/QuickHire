@@ -45,6 +45,7 @@
 import ConnectDB from '@/DB/connectDB';
 import validateToken from '@/middleware/tokenValidation';
 import Job from '@/models/Job';
+import User from '@/models/User';
 import Joi from 'joi';
 
 
@@ -68,9 +69,7 @@ export default async (req, res) => {
     const { method } = req;
     switch (method) {
         case 'POST':
-            await validateToken(req, res, async () => {
-                await postAJob(req, res);
-            });
+            await postAJob(req, res);
             break;
         default:
             res.status(400).json({ success: false, message: 'Invalid Request' });
@@ -80,7 +79,17 @@ export default async (req, res) => {
 const postAJob =  async (req, res) => {
     await ConnectDB();
     const data = req.body;
-    const { user ,title,description , salary , company , email , job_category , job_type , job_experience , job_vacancy , job_deadline } = data;
+
+    
+    console.log('data => ', data);
+    const { title,description , salary , company , email , job_category , job_type , job_experience , job_vacancy , job_deadline } = data;
+    const user = new User({
+        name: 'Sagar Patel',
+        email: 'sagarapatel03@gmail.com',
+        password: 'Abc@12345'
+    });
+    console.log('user => ', user);
+
     const { error } = schema.validate({ user ,title,description , salary , company , email , job_category , job_type , job_experience , job_vacancy , job_deadline });
 
     if (error) return res.status(401).json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') });
