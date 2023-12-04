@@ -21,6 +21,7 @@
 import ConnectDB from '@/DB/connectDB';
 import validateToken from '@/middleware/tokenValidation';
 import ApplyJob from '@/models/ApplyJob';
+import logger from '@/Utils/logger';
 
 export default async (req, res) => {
     await ConnectDB();
@@ -36,20 +37,17 @@ export default async (req, res) => {
     }
 }
 
-
-
-const getAppliedJobs =  async (req, res) => {
+const getAppliedJobs = async (req, res) => {
     await ConnectDB();
-
     const userId = req.query.id;
-    
-    if(!userId) return res.status(400).json({ success: false, message: "Please Login" })
-
+    if (!userId) return res.status(400).json({ success: false, message: "Please Login" })
     try {
-        const gettingAppliedJobs  = await ApplyJob.find({user : userId}).populate('user').populate('job');
-        return res.status(200).json({ success: true, data : gettingAppliedJobs })
+        const gettingAppliedJobs = await ApplyJob.find({ user: userId }).populate('user').populate('job');
+        logger.info('All applied jobs fetched successfully', gettingAppliedJobs);
+        return res.status(200).json({ success: true, data: gettingAppliedJobs })
     } catch (error) {
         console.log('Error in getting applied  job (server) => ', error);
+        logger.error('Error in getting applied job (server) => ', error);
         return res.status(500).json({ success: false, message: "Something Went Wrong Please Retry login !" })
     }
 }

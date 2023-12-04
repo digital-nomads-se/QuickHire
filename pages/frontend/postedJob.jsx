@@ -26,13 +26,13 @@ export default function PostedJobs() {
     }, [user, id, Cookies])
 
 
-    const { data, error, isLoading } = useSWR('/getMyPostedJobs', () =>  get_my_posted_job(id))
-    
-    useEffect(() => {
-        if(data) dispatch(setMyJobs(data?.data))
-    }, [data , dispatch])
+    const { data, error, isLoading } = useSWR('/getMyPostedJobs', () => get_my_posted_job(id))
 
-    if(error) toast.error(error)
+    useEffect(() => {
+        if (data) dispatch(setMyJobs(data?.data))
+    }, [data, dispatch])
+
+    if (error) toast.error(error)
 
     return (
         <>
@@ -53,7 +53,7 @@ export default function PostedJobs() {
                             <div className='w-full h-full px-4 py-4 flex  overflow-y-auto  items-start justify-center flex-wrap'>
                                 {
                                     myJobs?.map((job, index) => (
-                                        <JobsCard key={index} job={job}  posted={true}/>
+                                        <JobsCard key={index} job={job} posted={true} />
                                     ))
                                 }
                             </div>

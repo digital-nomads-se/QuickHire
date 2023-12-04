@@ -10,13 +10,9 @@ import { get_job } from '@/Services/job'
 import { setJobData } from '@/Utils/JobSlice'
 import { RevolvingDot } from 'react-loader-spinner'
 
-
-
 export default function Home() {
   const dispatch = useDispatch();
   const token = Cookies.get('token');
-
-
   const { data, error, isLoading } = useSWR('/getAllJobs', get_job)
 
   useEffect(() => {

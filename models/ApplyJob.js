@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
 import User from './User';
 import Job from './Job';
+import logger from '../Utils/logger.js';
 
+// Define the ApplyJob schema
 const ApplyJobSchema = new mongoose.Schema({
 
     user: {
@@ -34,6 +36,12 @@ const ApplyJobSchema = new mongoose.Schema({
         enum: ['pending', 'accepted', 'rejected']
     }
 }, { timestamps: true });
+
+// Add a pre-save hook to log when a new ApplyJob instance is saved
+ApplyJobSchema.pre('save', function (next) {
+    logger.info('New ApplyJob instance saved', this);
+    next();
+});
 
 const AppliedJob = mongoose.models.AppliedJobStatus || mongoose.model('AppliedJobStatus', ApplyJobSchema);
 
