@@ -8,18 +8,9 @@ import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 import { useSelector } from 'react-redux';
 
-
-
-
-
-
-
-
 export default function ApplicationsDetail() {
-    
     const router = useRouter();
     const { id } = router.query;
-
     const user = useSelector(state => state?.User?.userData)
     const userId = user?._id
 
@@ -28,14 +19,9 @@ export default function ApplicationsDetail() {
             router.push('/auth/login')
         }
     }, [user, userId, Cookies])
-
     const { data, error, isLoading } = useSWR('/get-application-details', () => get_application_details(id))
 
     if (error) return toast.error(error) && router.push('/frontend/postedJob')
-
-    
-
-
     return (
         <>
             {
@@ -66,8 +52,6 @@ export default function ApplicationsDetail() {
                                 </div>
                             </div>
                         </div>
-                       
-
                     </>
                 )
             }

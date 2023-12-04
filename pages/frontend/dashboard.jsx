@@ -12,15 +12,11 @@ import { GiSuitcase } from 'react-icons/gi'
 import { RevolvingDot } from 'react-loader-spinner'
 import { useDispatch, useSelector } from 'react-redux'
 
-
-
-
 export default function Dashboard() {
   const [showTable, setShowTable] = useState('appliedJobs')
-  const [loading , setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
   const router = useRouter();
   const dispatch = useDispatch();
-
   const activeUser = useSelector(state => state?.User?.userData)
   const id = activeUser?._id
 
@@ -29,19 +25,14 @@ export default function Dashboard() {
       router.push('/auth/login')
     }
   }, [activeUser, id, Cookies])
-
-  
-
-
   useEffect(() => {
     fetchAppliedJobs()
   }, [])
 
 
   const fetchAppliedJobs = async () => {
-
     const res = await get_my_applied_job(id)
-    const get_bookmarks =   await get_book_mark_job(id)
+    const get_bookmarks = await get_book_mark_job(id)
     if (res.success || get_bookmarks.success) {
       dispatch(setAppliedJob(res?.data))
       dispatch(setBookMark(get_bookmarks?.data))
@@ -52,13 +43,10 @@ export default function Dashboard() {
     }
   }
 
-
   return (
     <>
-
       {
         loading ? (
-
           <div className='bg-gray w-full h-screen flex items-center flex-col justify-center'>
             <RevolvingDot width='200' color="#808080" />
             <p className='text-xs uppercase'>Loading ...</p>
@@ -95,7 +83,6 @@ export default function Dashboard() {
           </>
         )
       }
-
     </>
   )
 }

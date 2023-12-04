@@ -17,10 +17,7 @@ export default function PostAJob() {
     const [error, setError] = useState({ user: "", title: "", salary: "", email: "", company: "", description: "", job_category: "", job_type: "", job_experience: "", job_vacancy: "", job_deadline: "" });
 
     const handleSubmit = async (e) => {
-
         e.preventDefault();
-
-
 
         if (!formData.title) {
             setError({ ...error, title: "title Field is required" })
@@ -83,19 +80,12 @@ export default function PostAJob() {
         }
     }
 
-
-
     const options = [
         { value: 'fulltime', label: 'Full Time' },
         { value: 'parttime', label: 'Part Time' },
         { value: 'internship', label: 'Internship' },
         { value: 'contract', label: 'Contract' },
     ]
-
-
-
-
-
 
     return (
         <>

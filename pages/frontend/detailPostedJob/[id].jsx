@@ -25,13 +25,13 @@ export default function PostedJobsDetails() {
         }
     }, [user, userId, Cookies])
 
-    const { data, error , isLoading } = useSWR(`/get-all-Application`, () => get_all_applications(id));
-    
-     useEffect(() => {
-        if(data) setApplication(data?.data)
+    const { data, error, isLoading } = useSWR(`/get-all-Application`, () => get_all_applications(id));
+
+    useEffect(() => {
+        if (data) setApplication(data?.data)
     }, [data])
 
-    if(error) toast.error(error)
+    if (error) toast.error(error)
 
     return (
         <>
@@ -51,7 +51,7 @@ export default function PostedJobsDetails() {
                                 <h1 className='text-3xl'>Detail List of  Jobs Application</h1>
                             </div>
                             <div className='w-full h-full px-4 py-4 flex  overflow-y-auto  items-start justify-center flex-wrap'>
-                                <ApplicationsDataTable application={application}  />
+                                <ApplicationsDataTable application={application} />
                             </div>
                         </div>
                     </>

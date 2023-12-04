@@ -4,20 +4,19 @@ import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { toast } from 'react-toastify';
 
+// The ApplicationsDataTable component
 export default function ApplicationsDataTable({ application }) {
 
+    // Use the Next.js router
     const router = useRouter();
 
-
+    // State for the data
     const [Data, setData] = useState([]);
 
-
+    // Effect to update the data when the application prop changes
     useEffect(() => {
         setData(application)
     }, [application])
-
-
-
 
     const [search, setSearch] = useState('');
     const [filteredData, setFilteredData] = useState([]);
@@ -25,7 +24,6 @@ export default function ApplicationsDataTable({ application }) {
     useEffect(() => {
         setFilteredData(Data);
     }, [Data])
-
 
     const handleAcceptStatus = async (id) => {
         const data = { id, status: "approved" }
@@ -57,8 +55,6 @@ export default function ApplicationsDataTable({ application }) {
         link.click();
         document.body.removeChild(link);
     }
-
-    
 
     const columns = [
         {
@@ -94,9 +90,7 @@ export default function ApplicationsDataTable({ application }) {
 
     ];
 
-
-
-
+    // Effect to update the filtered data when the search term or Data state changes
     useEffect(() => {
         if (search === '') {
             setFilteredData(Data);
@@ -107,14 +101,11 @@ export default function ApplicationsDataTable({ application }) {
                 return itemData.indexOf(textData) > -1;
             }))
         }
-
-
     }, [search, Data])
 
-
+    // Render the component
     return (
         <>
-
             <DataTable
                 subHeaderAlign={"right"}
                 columns={columns}
@@ -136,8 +127,6 @@ export default function ApplicationsDataTable({ application }) {
                 }
                 className="h-screen bg-white"
             />
-
-
         </>
     )
 }

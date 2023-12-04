@@ -3,6 +3,13 @@
 /.pnp
 .pnp.js
 
+# logs
+error.log
+combined.log
+
+# environment file
+.env
+
 # testing
 /coverage
 
@@ -23,8 +30,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
-.env
+# local
 .local
 
 # vercel

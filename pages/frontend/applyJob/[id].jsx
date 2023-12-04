@@ -11,7 +11,7 @@ export default function ApplyJob() {
     const dispatch = useDispatch();
     const { id } = router.query
     const activeUser = useSelector(state => state.User.userData)
-    const [formikData, setFormikData] = useState({ name: '', email: activeUser?.email , about: '', job: id, user: activeUser?._id })
+    const [formikData, setFormikData] = useState({ name: '', email: activeUser?.email, about: '', job: id, user: activeUser?._id })
     const [file, setFile] = useState(null)
     const [error, setError] = useState({ name: '', email: "", about: '', job: '', user: '', cv: '' });
 
@@ -85,7 +85,7 @@ export default function ApplyJob() {
 
     }
 
-    
+
 
     return (
         <>
