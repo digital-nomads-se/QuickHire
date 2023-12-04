@@ -10,7 +10,7 @@ const swaggerOptions = {
       description: 'QuickHire API Documentation',
     },
   },
-  apis: ['./pages/api/*.js'], 
+  apis: ['./pages/api/**/*.js'], 
 };
 
 const swaggerSpec = swaggerJsDoc(swaggerOptions);
