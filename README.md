@@ -45,3 +45,5 @@ Welcome to the QuickHire Hiring Platform, the next evolution in recruitment tech
 - *Architecture Pattern:* Microservices.
 - *Event Streaming:* Apache Kafka.
 - *Miscellaneous:* GraphQL, Keycloak, OAuth2, Swagger.
+
+  [![Build and Push Docker Image](https://github.com/digital-nomads-se/QuickHire/actions/workflows/node.js.yml/badge.svg)](https://github.com/digital-nomads-se/QuickHire/actions/workflows/node.js.yml)
