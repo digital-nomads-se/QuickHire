@@ -42,7 +42,7 @@ import validateToken from '@/middleware/tokenValidation';
 import logger from '@/Utils/logger';
 import { httpRequestCount } from '../metrics';
 
-const kafkaProcessApplication = require('../../Services/kafka/processJobApplication');
+const kafkaProcessApplication = require('../../../Services/processApplyForJobTask/processJobApplication');
 
 const schema = Joi.object({
     name: Joi.string().required(),
