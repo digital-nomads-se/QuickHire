@@ -42,6 +42,7 @@ import logger from '@/Utils/logger';
 import { httpRequestCount } from '../metrics';
 import { getSession } from '@auth0/nextjs-auth0';
 const parseResume = require('../../../Services/processApplyForJobTask/parseResume');
+
 const kafkaProcessApplication = require('../../../Services/processApplyForJobTask/processJobApplication');
 
 const schema = Joi.object({
