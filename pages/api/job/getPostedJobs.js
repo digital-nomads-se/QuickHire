@@ -22,6 +22,7 @@ import ConnectDB from '@/DB/connectDB';
 import validateToken from '@/middleware/tokenValidation';
 import Job from '@/models/Job';
 import logger from '@/Utils/logger';
+import { httpRequestCount } from '../metrics';
 
 export default async (req, res) => {
     await ConnectDB();
@@ -29,10 +30,12 @@ export default async (req, res) => {
     switch (method) {
         case 'GET':
             await validateToken(req, res, async () => {
+                httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
                 await getPostedJobs(req, res);
             });
             break;
         default:
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: 400 });
             res.status(400).json({ success: false, message: 'Invalid Request' });
     }
 }

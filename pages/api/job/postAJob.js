@@ -48,6 +48,7 @@ import Job from '@/models/Job';
 import User from '@/models/User';
 import Joi from 'joi';
 import logger from '@/Utils/logger';
+import { httpRequestCount } from '../metrics';
 
 const schema = Joi.object({
     title: Joi.string().required(),
@@ -68,9 +69,14 @@ export default async (req, res) => {
     const { method } = req;
     switch (method) {
         case 'POST':
+            await validateToken(req, res, async () => {
+                httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
+                await postAJob(req, res);
+            });
             await postAJob(req, res);
             break;
         default:
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: 400 });
             res.status(400).json({ success: false, message: 'Invalid Request' });
     }
 }
