@@ -42,6 +42,8 @@ import validateToken from '@/middleware/tokenValidation';
 import logger from '@/Utils/logger';
 import { httpRequestCount } from '../metrics';
 
+const kafkaProcessApplication = require('../../Services/kafka/processJobApplication');
+
 const schema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
@@ -116,6 +118,8 @@ const applyToJob = async (req, res) => {
 
             const newJobApplication = AppliedJob.create(jobApplication);
             logger.info('New job application created', newJobApplication);
+
+            kafkaProcessApplication.processApplication(jobApplication.user, jobApplication.job, newPath);
             return res.status(200).json({ success: true, message: 'Job application submitted successfully !' });
         })
     } catch (error) {
