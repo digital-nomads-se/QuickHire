@@ -7,13 +7,10 @@ import Cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 
-
-
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
-})
-{
+}) {
   const router = useRouter();
 
   useEffect(() => {

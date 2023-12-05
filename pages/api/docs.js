@@ -1,5 +1,6 @@
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import logger from '@/Utils/logger';
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -10,7 +11,7 @@ const swaggerOptions = {
       description: 'QuickHire API Documentation',
     },
   },
-  apis: ['./pages/api/*.js'], 
+  apis: ['./pages/api/**/*.js'],
 };
 
 const swaggerSpec = swaggerJsDoc(swaggerOptions);
@@ -20,8 +21,10 @@ export default (req, res) => {
     // Serve the Swagger document on GET request
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(swaggerSpec));
+    logger.info('Swagger document served');
   } else {
     // Serve the Swagger UI on other requests
     swaggerUi.serveUiMiddleware()(req, res);
+    logger.info('Swagger UI served');
   }
 };

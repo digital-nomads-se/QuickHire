@@ -39,6 +39,7 @@ import fs from 'fs';
 import path from 'path'
 import crypto from 'crypto';
 import validateToken from '@/middleware/tokenValidation';
+import logger from '@/Utils/logger';
 
 const kafkaProcessApplication = require('../../Services/kafka/processJobApplication');
 
@@ -56,7 +57,6 @@ export const config = {
     },
 };
 
-
 export default async (req, res) => {
     await ConnectDB();
     const { method } = req;
@@ -71,10 +71,8 @@ export default async (req, res) => {
     }
 }
 
-const applyToJob =  async (req, res) => {
+const applyToJob = async (req, res) => {
     await ConnectDB();
-
-
     try {
         const form = new formidable.IncomingForm();
         form.parse(req, async (err, fields, files) => {
@@ -82,19 +80,12 @@ const applyToJob =  async (req, res) => {
                 console.error('Error', err)
                 throw err
             }
-
             const oldPath = files.cv.filepath;
-            const originalFileName  = files.cv.originalFilename
-            
-
-
+            const originalFileName = files.cv.originalFilename
             const fileExtension = path.extname(originalFileName);
             const randomString = crypto.randomBytes(6).toString('hex');
             const fileName = `${originalFileName.replace(fileExtension, '')}_${randomString}${fileExtension}`;
-
-
             const newPath = path.join(process.cwd(), 'public', 'uploads', fileName);
-
 
             // Read the file
             fs.readFile(oldPath, function (err, data) {
@@ -107,9 +98,6 @@ const applyToJob =  async (req, res) => {
                 });
             });
 
-
-
-
             const jobApplication = {
                 name: fields.name,
                 email: fields.email,
@@ -119,27 +107,19 @@ const applyToJob =  async (req, res) => {
                 cv: fileName,
             };
 
-            const {name , email , about , job , user} = jobApplication;
-
-
-            const { error } = schema.validate({name , email , about , job , user});
+            const { name, email, about, job, user } = jobApplication;
+            const { error } = schema.validate({ name, email, about, job, user });
             if (error) return res.status(401).json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') });
 
             const newJobApplication = AppliedJob.create(jobApplication);
+            logger.info('New job application created', newJobApplication);
+
             kafkaProcessApplication.processApplication(jobApplication.user, jobApplication.job, newPath);
             return res.status(200).json({ success: true, message: 'Job application submitted successfully !' });
         })
     } catch (error) {
-
         console.log('error in apply job (server) => ', error);
+        logger.error(`error in apply job (server) => ${error}`);
         return res.status(500).json({ success: false, message: 'something went wrong please retry login !' });
     }
-
-
-
-
-
-
-
 }
-

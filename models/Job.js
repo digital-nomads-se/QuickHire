@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 import User from './User';
+import logger from '../Utils/logger.js';
 
 const JobSchema = new mongoose.Schema({
 
-    user : {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
@@ -34,7 +35,7 @@ const JobSchema = new mongoose.Schema({
     job_type: {
         type: String,
         required: true,
-        trim : true,
+        trim: true,
     },
     job_experience: {
         type: String,
@@ -48,10 +49,14 @@ const JobSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
+}, { timestamps: true });
 
+// Add a pre-save hook to log when a new Job instance is saved
+JobSchema.pre('save', function (next) {
+    logger.info('New Job instance saved', this);
+    next();
+});
 
-},{timestamps: true});
-
-const Job =  mongoose.models.Job || mongoose.model('Job', JobSchema);
+const Job = mongoose.models.Job || mongoose.model('Job', JobSchema);
 
 export default Job;

@@ -44,7 +44,9 @@
     "resume-parser": "^1.1.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
-    "swr": "^2.1.2"
+    "swagger-ui-react": "^5.10.3",
+    "swr": "^2.1.2",
+    "winston": "^3.11.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",

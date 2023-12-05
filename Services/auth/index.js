@@ -1,4 +1,3 @@
-
 export const register_me = async (formData) => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/register`, {

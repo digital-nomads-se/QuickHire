@@ -10,8 +10,7 @@ import { setUserData } from '@/Utils/UserSlice';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import { useUser } from '@auth0/nextjs-auth0/client';
 
-
-
+// The NavBar component
 export default function NavBar() {
     const dispatch = useDispatch();
     const [openJobs, setOpenJobs] = useState(false)
@@ -24,10 +23,7 @@ export default function NavBar() {
 
     const Router = useRouter();
     // const user = useSelector(state => state.User.userData)
-
-
     const [isOpen, setIsOpen] = useState(false);
-
     const [scrolled, isScrolled] = useState(false);
 
 
@@ -78,7 +74,6 @@ export default function NavBar() {
             localStorage.removeItem('user');
             Router.replace('/', undefined, { shallow: true });
         } catch (error) {
-            console.error('Error during logout:', error);
         }
     };
 
@@ -103,12 +98,12 @@ export default function NavBar() {
                 </div>
                 <div className='px-2 h-full hidden items-center justify-center lg:flex ' >
                     {
-                        user &&(
-                        <>
-                        <Link href={'/api/auth/logout'} className='px-4 py-2 border border-white rounded uppercase tracking-widest mx-4   transition-all duration-700 hover:bg-white font-semibold text-base hover:text-black'>Logout</Link>
-                        
-                        <p className='text-lg px-4 font-semibold'>{user?.email}</p>
-                        </>
+                        user && (
+                            <>
+                                <Link href={'/api/auth/logout'} className='px-4 py-2 border border-white rounded uppercase tracking-widest mx-4   transition-all duration-700 hover:bg-white font-semibold text-base hover:text-black'>Logout</Link>
+
+                                <p className='text-lg px-4 font-semibold'>{user?.email}</p>
+                            </>
                         )
                     }
 
