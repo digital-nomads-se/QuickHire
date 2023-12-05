@@ -72,7 +72,7 @@ export default function PostAJob() {
         if (res.success) {
             toast.success(res.message);
             setTimeout(() => {
-                router.push('/frontend/displayJobs')
+                router.push('/frontend/postedJob')
             }, 1000)
         }
         else {

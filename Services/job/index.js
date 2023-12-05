@@ -6,8 +6,7 @@ export const post_job = async (formData) => {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/job/postAJob`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${Cookies.get('token')}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData),
         })
@@ -22,10 +21,7 @@ export const post_job = async (formData) => {
 export const get_job = async () => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/job/getAllJobs`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${Cookies.get('token')}`
-            }
+            method: 'GET'
         })
         const data = res.json();
         return data;
@@ -38,8 +34,7 @@ export const get_job = async () => {
 export const get_specified_job = async (id) => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/job/getSpecifiedJob?id=${id}`, {
-            method: 'GET',
-            headers: { 'Authorization': `Bearer ${Cookies.get('token')}` }
+            method: 'GET'
         })
         const data = res.json();
         return data;
@@ -78,11 +73,10 @@ export const get_my_applied_job = async (id) => {
 }
 
 // get my all posted job api 
-export const get_my_posted_job = async (id) => {
+export const get_my_posted_job = async (userEmail) => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/job/getPostedJobs?id=${id}`, {
-            method: 'GET',
-            headers: { 'Authorization': `Bearer ${Cookies.get('token')}` }
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/job/getPostedJobs?id=${userEmail}`, {
+            method: 'GET'
         })
         const data = res.json();
         return data;
@@ -95,8 +89,7 @@ export const get_my_posted_job = async (id) => {
 export const get_all_applications = async (id) => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/job/getAllApplicationsOfSpecifiedJob?id=${id}`, {
-            method: 'GET',
-            headers: { 'Authorization': `Bearer ${Cookies.get('token')}` }
+            method: 'GET'
         })
         const data = res.json();
         return data;
@@ -126,8 +119,7 @@ export const change_application_status = async (formData) => {
 export const get_application_details = async (id) => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/job/getApplicationDetail?id=${id}`, {
-            method: 'GET',
-            headers: { 'Authorization': `Bearer ${Cookies.get('token')}` }
+            method: 'GET'
         })
         const data = res.json();
         return data;

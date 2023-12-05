@@ -19,7 +19,6 @@
  */
 
 import ConnectDB from '@/DB/connectDB';
-import validateToken from '@/middleware/tokenValidation';
 import AppliedJob from '@/models/ApplyJob';
 import logger from '@/Utils/logger';
 import { httpRequestCount } from '../metrics';
@@ -44,7 +43,7 @@ const getApplicationDetail = async (req, res) => {
     const id = data?.id
     if (!id) return res.status(400).json({ success: false, message: "Please Login" })
     try {
-        const getApplicationDetails = await AppliedJob.findById(id).populate('job').populate('user')
+        const getApplicationDetails = await AppliedJob.findById(id).populate('job')
         logger.info('Application details fetched successfully for Id : ', id);
         return res.status(200).json({ success: true, data: getApplicationDetails })
     } catch (error) {

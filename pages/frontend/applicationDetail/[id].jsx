@@ -5,20 +5,19 @@ import { get_application_details } from '@/Services/job';
 import { RevolvingDot } from 'react-loader-spinner';
 import NavBar from '@/components/NavBar';
 import { toast } from 'react-toastify';
-import Cookies from 'js-cookie';
-import { useSelector } from 'react-redux';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 export default function ApplicationsDetail() {
     const router = useRouter();
     const { id } = router.query;
-    const user = useSelector(state => state?.User?.userData)
-    const userId = user?._id
+    const user = useUser();
 
     useEffect(() => {
-        if (!userId || !Cookies.get('token')) {
+        if (!user) {
             router.push('/auth/login')
         }
-    }, [user, userId, Cookies])
+    }, [user])
+    
     const { data, error, isLoading } = useSWR('/get-application-details', () => get_application_details(id))
 
     if (error) return toast.error(error) && router.push('/frontend/postedJob')

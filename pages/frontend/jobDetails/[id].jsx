@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { RevolvingDot } from 'react-loader-spinner'
 import useSWR from 'swr'
 import { book_mark_job } from '@/Services/job/bookmark'
+import { useUser } from '@auth0/nextjs-auth0/client'
 
 
 
@@ -27,9 +28,8 @@ export default function JobDetails() {
     const { id } = router.query
     const JobData = useSelector(state => state?.Job?.JobData)
     const machingData = useSelector(state => state?.Job?.matchingData)
-    const user = useSelector(state => state?.User?.userData)
+    const user = useUser();
     const [JobDetails, setJobDetails] = useState(null);
-
 
     const { data, error, isLoading } = useSWR(`/get-specified-job`, () => get_specified_job(id));
 
@@ -61,7 +61,7 @@ export default function JobDetails() {
 
         if (!user) return toast.error('Please Login First');
 
-        const data = { user: user?._id, job: JobDetails?._id }
+        const data = { userEmail: user?.user?.email, job: JobDetails?._id }
         const res = await book_mark_job(data);
         if (res.success) {
             return toast.success(res.message)
@@ -136,14 +136,10 @@ export default function JobDetails() {
                                     </div>
                                     <div className='flex items-center justify-center'>
                                         {
-                                            JobDetails?.user?.email === user?.email ? (
-                                                <p className='text-xs text-red-500'>unable Apply to your Own jobs</p>
-                                            ) : (
-                                                <div className='flex items-center justify-center  '>
-                                                    <BsFillBookmarkCheckFill onClick={handleBookMark} className='text-black text-4xl cursor-pointer  mx-2' />
-                                                    <button onClick={handleApply} className='md:px-6 md:py-3 px-3 py-2 mt-2 md:mt-0 w-full text-white bg-gray-600 border border-gray-600 rounded hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center '>Apply Position</button>
-                                                </div>
-                                            )
+                                            <div className='flex items-center justify-center  '>
+                                                <BsFillBookmarkCheckFill onClick={handleBookMark} className='text-black text-4xl cursor-pointer  mx-2' />
+                                                <button onClick={handleApply} className='md:px-6 md:py-3 px-3 py-2 mt-2 md:mt-0 w-full text-white bg-gray-600 border border-gray-600 rounded hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center '>Apply Position</button>
+                                            </div>
                                         }
                                     </div>
                                 </div>

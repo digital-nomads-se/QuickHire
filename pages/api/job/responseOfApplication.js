@@ -24,7 +24,6 @@
  */
 
 import ConnectDB from '@/DB/connectDB';
-import validateToken from '@/middleware/tokenValidation';
 import AppliedJob from '@/models/ApplyJob';
 import logger from '@/Utils/logger';
 import { httpRequestCount } from '../metrics';
@@ -34,10 +33,8 @@ export default async (req, res) => {
     const { method } = req;
     switch (method) {
         case 'PUT':
-            await validateToken(req, res, async () => {
-                httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
-                await change_application_status(req, res);
-            });
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
+            await change_application_status(req, res);
             break;
         default:
             httpRequestCount.inc({ method: req.method, route: req.url, statusCode: 400 });

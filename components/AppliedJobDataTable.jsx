@@ -83,12 +83,6 @@ export default function AppliedJobDataTable() {
                 selectableRowsHighlight
                 subHeader
                 persistTableHead
-                subHeaderComponent={
-                    <input className='w-60  py-2 px-2  outline-none  border-b-2 border-black' type={"search"}
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder={"Search with company name..."} />
-                }
                 className="h-screen bg-white"
             />
         </>

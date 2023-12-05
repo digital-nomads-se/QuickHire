@@ -1,12 +1,11 @@
 import mongoose from 'mongoose';
-import User from './User';
 import logger from '../Utils/logger.js';
 
 const JobSchema = new mongoose.Schema({
 
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+    userEmail: {
+        type: String,
+        required: true,
     },
     title: {
         type: String,

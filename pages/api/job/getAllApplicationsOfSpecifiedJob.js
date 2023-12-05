@@ -26,7 +26,6 @@
  */
 
 import ConnectDB from '@/DB/connectDB';
-import validateToken from '@/middleware/tokenValidation';
 import AppliedJob from '@/models/ApplyJob';
 import logger from '@/Utils/logger';
 import { httpRequestCount } from '../metrics';
@@ -36,10 +35,8 @@ export default async (req, res) => {
     const { method } = req;
     switch (method) {
         case 'GET':
-            await validateToken(req, res, async () => {
-                httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
-                await getAllApplicationsOfSpecifiedJob(req, res);
-            });
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
+            await getAllApplicationsOfSpecifiedJob(req, res);
             break;
         default:
             httpRequestCount.inc({ method: req.method, route: req.url, statusCode: 405 });
@@ -53,7 +50,7 @@ const getAllApplicationsOfSpecifiedJob = async (req, res) => {
     const id = data?.id
     if (!id) return res.status(400).json({ success: false, message: "Please Login" })
     try {
-        const gettingjobs = await AppliedJob.find({ job: id }).populate('user');
+        const gettingjobs = await AppliedJob.find({ job: id });
         logger.info('All applications of a specified job fetched successfully for id : ', id);
         return res.status(200).json({ success: true, data: gettingjobs })
     } catch (error) {

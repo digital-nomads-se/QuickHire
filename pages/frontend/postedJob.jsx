@@ -2,7 +2,7 @@ import { get_my_posted_job } from '@/Services/job';
 import { setMyJobs } from '@/Utils/JobSlice';
 import JobsCard from '@/components/JobsCard';
 import NavBar from '@/components/NavBar'
-import Cookies from 'js-cookie';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { RevolvingDot } from 'react-loader-spinner';
@@ -13,21 +13,18 @@ import useSWR from 'swr'
 export default function PostedJobs() {
     const router = useRouter();
     const dispatch = useDispatch();
-    const user = useSelector(state => state?.User?.userData)
+    const user = useUser();
     const myJobs = useSelector(state => state?.Job?.myJobs);
-    const id = user?._id
-
-
 
     useEffect(() => {
-        if (!id || !Cookies.get('token')) {
+        if (!user) {
             router.push('/auth/login')
         }
-    }, [user, id, Cookies])
+    }, [user])
 
+    const userEmail = user?.user?.email;
 
-    const { data, error, isLoading } = useSWR('/getMyPostedJobs', () => get_my_posted_job(id))
-
+    const { data, error, isLoading } = useSWR('/getMyPostedJobs', () => get_my_posted_job(userEmail))
     useEffect(() => {
         if (data) dispatch(setMyJobs(data?.data))
     }, [data, dispatch])

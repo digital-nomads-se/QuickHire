@@ -25,9 +25,7 @@ function startConsumer() {
     consumer.on('message', function (message) {
         try {
             const parsedMessage = JSON.parse(message.value);
-            console.log('Received message:', parsedMessage);
-            const { job_description, email_address, resumeContent } = parsedMessage;
-            consumerProcessing.processConsumedMessage(job_description, resumeContent);
+            consumerProcessing.processConsumedMessage(parsedMessage);
         } catch (error) {
             console.error('Error parsing message:', error);
         }

@@ -68,15 +68,6 @@ export default function NavBar() {
     }, [scrolled])
 
 
-    const handleLogout = async () => {
-        try {
-            Cookies.remove('token');
-            localStorage.removeItem('user');
-            Router.replace('/', undefined, { shallow: true });
-        } catch (error) {
-        }
-    };
-
     const handleClickOutside = () => {
         setIsOpen(false);
     };
@@ -100,9 +91,9 @@ export default function NavBar() {
                     {
                         user && (
                             <>
+                                <p className='text-lg px-4 font-semibold'>{user?.email}</p>
                                 <Link href={'/api/auth/logout'} className='px-4 py-2 border border-white rounded uppercase tracking-widest mx-4   transition-all duration-700 hover:bg-white font-semibold text-base hover:text-black'>Logout</Link>
 
-                                <p className='text-lg px-4 font-semibold'>{user?.email}</p>
                             </>
                         )
                     }

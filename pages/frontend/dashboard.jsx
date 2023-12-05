@@ -4,7 +4,7 @@ import SavedJobDataTable from '@/components/SavedJobDataTable'
 import { get_my_applied_job } from '@/Services/job'
 import { get_book_mark_job } from '@/Services/job/bookmark'
 import { setAppliedJob, setBookMark } from '@/Utils/AppliedJobSlice'
-import Cookies from 'js-cookie'
+import { useUser } from '@auth0/nextjs-auth0/client'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { BsFillBookmarkStarFill } from 'react-icons/bs'
@@ -17,22 +17,24 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
   const router = useRouter();
   const dispatch = useDispatch();
-  const activeUser = useSelector(state => state?.User?.userData)
-  const id = activeUser?._id
+  const activeUser = useUser();
+  const user = activeUser?.user;
 
   useEffect(() => {
-    if (!id || !Cookies.get('token')) {
+    if (!user) {
       router.push('/auth/login')
     }
-  }, [activeUser, id, Cookies])
+  }, [user])
+
+  const userEmail = user?.email;
+
   useEffect(() => {
     fetchAppliedJobs()
   }, [])
 
-
   const fetchAppliedJobs = async () => {
-    const res = await get_my_applied_job(id)
-    const get_bookmarks = await get_book_mark_job(id)
+    const res = await get_my_applied_job(userEmail)
+    const get_bookmarks = await get_book_mark_job(userEmail)
     if (res.success || get_bookmarks.success) {
       dispatch(setAppliedJob(res?.data))
       dispatch(setBookMark(get_bookmarks?.data))

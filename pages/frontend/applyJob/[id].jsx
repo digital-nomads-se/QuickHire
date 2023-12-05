@@ -1,5 +1,6 @@
 import NavBar from '@/components/NavBar';
 import { apply_job } from '@/Services/job';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,13 +11,14 @@ export default function ApplyJob() {
     const router = useRouter()
     const dispatch = useDispatch();
     const { id } = router.query
-    const activeUser = useSelector(state => state.User.userData)
-    const [formikData, setFormikData] = useState({ name: '', email: activeUser?.email, about: '', job: id, user: activeUser?._id })
+    const activeUser = useUser();
+    const user = activeUser?.user;
+    const [formikData, setFormikData] = useState({ name: '', email: user?.email, about: '', job: id, user: activeUser?._id })
     const [file, setFile] = useState(null)
     const [error, setError] = useState({ name: '', email: "", about: '', job: '', user: '', cv: '' });
 
 
-    const { name, email, about, job, user } = formikData;
+    const { name, email, about, job } = formikData;
 
     const handleSubmit = async (e) => {
 

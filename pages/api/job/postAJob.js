@@ -43,17 +43,15 @@
  */
 
 import ConnectDB from '@/DB/connectDB';
-import validateToken from '@/middleware/tokenValidation';
 import Job from '@/models/Job';
-import User from '@/models/User';
 import Joi from 'joi';
 import logger from '@/Utils/logger';
 import { httpRequestCount } from '../metrics';
+import { getSession } from '@auth0/nextjs-auth0';
 
 const schema = Joi.object({
     title: Joi.string().required(),
     description: Joi.string().required(),
-    user: Joi.required(),
     email: Joi.string().email().required(),
     company: Joi.string().required(),
     job_category: Joi.string().required(),
@@ -62,17 +60,16 @@ const schema = Joi.object({
     job_vacancy: Joi.number().required(),
     job_deadline: Joi.date().required(),
     salary: Joi.number().required(),
+    userEmail: Joi.string().email().required(),
 });
 
 export default async (req, res) => {
     await ConnectDB();
     const { method } = req;
+
     switch (method) {
         case 'POST':
-            await validateToken(req, res, async () => {
-                httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
-                await postAJob(req, res);
-            });
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
             await postAJob(req, res);
             break;
         default:
@@ -85,22 +82,20 @@ const postAJob = async (req, res) => {
     await ConnectDB();
     const data = req.body;
 
+    const session = await getSession(req, res);
     
-    console.log('data => ', data);
-    const { title,description , salary , company , email , job_category , job_type , job_experience , job_vacancy , job_deadline } = data;
+    if (!session || !session.user) {
+        res.status(400).json({ success: false, message: 'Unauthorized' });
+        return;
+    }
+
+    const userEmail = session.user.email;
     
-    const user = new User({
-        name: 'Sagar Patel',
-        email: 'sagarapatel03@gmail.com',
-        password: 'Abc@12345'
-    });
-    console.log('user => ', user);
-
-    const { error } = schema.validate({ user ,title,description , salary , company , email , job_category , job_type , job_experience , job_vacancy , job_deadline });
-
+    const { title, description, salary, company, email, job_category, job_type, job_experience, job_vacancy, job_deadline } = data;
+    const { error } = schema.validate({ userEmail, title, description, salary, company, email, job_category, job_type, job_experience, job_vacancy, job_deadline });
     if (error) return res.status(401).json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') });
     try {
-        const creatingUser = await Job.create({ user, title, description, salary, company, email, job_category, job_type, job_experience, job_vacancy, job_deadline });
+        const creatingUser = await Job.create({ userEmail, title, description, salary, company, email, job_category, job_type, job_experience, job_vacancy, job_deadline });
         logger.info('Job Posted Successfully !', creatingUser);
         return res.status(200).json({ success: true, message: "Job Posted Successfully !" })
     } catch (error) {

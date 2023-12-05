@@ -2,6 +2,7 @@ const kafka = require('kafka-node');
 
 // Function to publish a message
 function publishMessage(message) {
+    console.log("Publishing message to Kafka..." + message);
     const user = new kafka.KafkaClient({
         kafkaHost: 'pkc-4r087.us-west2.gcp.confluent.cloud:9092',
         sslOptions: {

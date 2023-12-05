@@ -42,14 +42,13 @@
  */
 
 import ConnectDB from '@/DB/connectDB';
-import validateToken from '@/middleware/tokenValidation';
 import bookMarkJob from '@/models/Bookmark';
 import Joi from 'joi';
 import logger from '@/Utils/logger';
 import { httpRequestCount } from '../metrics';
 
 const schema = Joi.object({
-    user: Joi.required(),
+    userEmail: Joi.required(),
     job: Joi.required(),
 });
 
@@ -57,22 +56,16 @@ export default async (req, res) => {
     await ConnectDB();
     switch (req.method) {
         case "POST":
-            await validateToken(req, res, async () => {
-                httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
-                await bookmark_my_job(req, res);
-            });
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
+            await bookmark_my_job(req, res);
             break;
         case "GET":
-            await validateToken(req, res, async () => {
-                httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
-                await getBookmark_jobs(req, res);
-            });
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
+            await getBookmark_jobs(req, res);
             break;
         case "DELETE":
-            await validateToken(req, res, async () => {
-                httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
-                await delete_bookmark_job(req, res);
-            });
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
+            await delete_bookmark_job(req, res);
             break;
         default:
             httpRequestCount.inc({ method: req.method, route: req.url, statusCode: 405 });
@@ -83,13 +76,13 @@ export default async (req, res) => {
 export const bookmark_my_job = async (req, res) => {
     await ConnectDB();
     const data = req.body;
-    const { job, user } = data;
-    const { error } = schema.validate({ job, user });
+    const { job, userEmail } = data;
+    const { error } = schema.validate({ job, userEmail });
     if (error) return res.status(401).json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') });
     try {
-        const checkAlreadyBookMarked = await bookMarkJob.findOne({ job, user })
+        const checkAlreadyBookMarked = await bookMarkJob.findOne({ job, userEmail })
         if (checkAlreadyBookMarked) return res.status(401).json({ success: false, message: "This Job is Already in Bookmark" })
-        const bookmarkingJob = await bookMarkJob.create({ job, user });
+        const bookmarkingJob = await bookMarkJob.create({ job, userEmail });
         logger.info('New Job Bookmarked', bookmarkingJob);
         return res.status(200).json({ success: true, message: "Job Bookmarked successfully !" })
     } catch (error) {
@@ -103,7 +96,7 @@ export const getBookmark_jobs = async (req, res) => {
     const userId = req.query.id;
     if (!userId) return res.status(400).json({ success: false, message: "Please Login" })
     try {
-        const getBookMark = await bookMarkJob.find({ user: userId }).populate('job').populate('user')
+        const getBookMark = await bookMarkJob.find({ userEmail: userId }).populate('job');
         logger.info('Bookmarked Jobs', getBookMark);
         return res.status(200).json({ success: true, message: "Job Bookmarked successfully !", data: getBookMark })
     } catch (error) {

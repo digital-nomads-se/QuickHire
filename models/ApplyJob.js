@@ -1,14 +1,13 @@
 import mongoose from 'mongoose';
-import User from './User';
 import Job from './Job';
 import logger from '../Utils/logger.js';
 
 // Define the ApplyJob schema
 const ApplyJobSchema = new mongoose.Schema({
 
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+    userEmail: {
+        type: String,
+        required: true,
     },
     job: {
         type: mongoose.Schema.Types.ObjectId,

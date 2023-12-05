@@ -1,6 +1,7 @@
 import { get_all_applications } from '@/Services/job';
 import ApplicationsDataTable from '@/components/ApplicationsDataTable'
 import NavBar from '@/components/NavBar'
+import { useUser } from '@auth0/nextjs-auth0/client';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -13,18 +14,18 @@ export default function PostedJobsDetails() {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const { id } = router.query;
-    const user = useSelector(state => state?.User?.userData)
-    const userId = user?._id
+    const user = useUser();
 
     const [application, setApplication] = useState([]);
 
 
     useEffect(() => {
-        if (!userId || !Cookies.get('token')) {
+        if (!user) {
             router.push('/auth/login')
         }
-    }, [user, userId, Cookies])
+    }, [user])
 
+    const userEmail = user?.user?.email;
     const { data, error, isLoading } = useSWR(`/get-all-Application`, () => get_all_applications(id));
 
     useEffect(() => {
@@ -35,7 +36,6 @@ export default function PostedJobsDetails() {
 
     return (
         <>
-
             {
                 isLoading ? (
 

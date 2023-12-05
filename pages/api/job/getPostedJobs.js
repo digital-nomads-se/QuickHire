@@ -29,10 +29,8 @@ export default async (req, res) => {
     const { method } = req;
     switch (method) {
         case 'GET':
-            await validateToken(req, res, async () => {
-                httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
-                await getPostedJobs(req, res);
-            });
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
+            await getPostedJobs(req, res);
             break;
         default:
             httpRequestCount.inc({ method: req.method, route: req.url, statusCode: 400 });
@@ -43,10 +41,11 @@ export default async (req, res) => {
 const getPostedJobs = async (req, res) => {
     await ConnectDB();
     const data = req.query;
+    
     const id = data?.id
     if (!id) return res.status(400).json({ success: false, message: "Please Login" })
     try {
-        const gettingjobs = await Job.find({ user: id }).populate('user', 'name email');
+        const gettingjobs = await Job.find({ userEmail: id });
         logger.info('All posted jobs fetched successfully', gettingjobs);
         return res.status(200).json({ success: true, data: gettingjobs })
     } catch (error) {
