@@ -22,15 +22,18 @@ import ConnectDB from '@/DB/connectDB';
 import validateToken from '@/middleware/tokenValidation';
 import AppliedJob from '@/models/ApplyJob';
 import logger from '@/Utils/logger';
+import { httpRequestCount } from '../metrics';
 
 export default async (req, res) => {
     await ConnectDB();
     const { method } = req;
     switch (method) {
         case 'GET':
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
             await getApplicationDetail(req, res);
             break;
         default:
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: 400 });
             res.status(400).json({ success: false, message: 'Invalid Request' });
     }
 }
@@ -42,7 +45,7 @@ const getApplicationDetail = async (req, res) => {
     if (!id) return res.status(400).json({ success: false, message: "Please Login" })
     try {
         const getApplicationDetails = await AppliedJob.findById(id).populate('job').populate('user')
-        logger.info('Application details fetched successfully', getApplicationDetails);
+        logger.info('Application details fetched successfully for Id : ', id);
         return res.status(200).json({ success: true, data: getApplicationDetails })
     } catch (error) {
         console.log('Error in getting a specifed Job job (server) => ', error);

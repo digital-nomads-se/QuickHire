@@ -40,6 +40,7 @@ import path from 'path'
 import crypto from 'crypto';
 import validateToken from '@/middleware/tokenValidation';
 import logger from '@/Utils/logger';
+import { httpRequestCount } from '../metrics';
 
 const schema = Joi.object({
     name: Joi.string().required(),
@@ -56,6 +57,10 @@ export const config = {
 };
 
 export default async (req, res) => {
+
+    // Increment the counter for all requests
+    httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
+
     await ConnectDB();
     const { method } = req;
     switch (method) {

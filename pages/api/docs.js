@@ -1,6 +1,8 @@
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import logger from '@/Utils/logger';
+import { httpRequestCount } from './metrics';
+import withMetrics from '../../Utils/withMetrics';
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -16,7 +18,7 @@ const swaggerOptions = {
 
 const swaggerSpec = swaggerJsDoc(swaggerOptions);
 
-export default (req, res) => {
+const handler = async (req, res) => {
   if (req.method === 'GET') {
     // Serve the Swagger document on GET request
     res.setHeader('Content-Type', 'application/json');
@@ -28,3 +30,5 @@ export default (req, res) => {
     logger.info('Swagger UI served');
   }
 };
+
+export default withMetrics(handler);

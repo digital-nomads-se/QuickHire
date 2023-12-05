@@ -15,6 +15,7 @@
 import ConnectDB from '@/DB/connectDB';
 import Job from '@/models/Job';
 import logger from '@/Utils/logger';
+import { httpRequestCount } from '../metrics';
 
 export default async (req, res) => {
     await ConnectDB();
@@ -22,8 +23,10 @@ export default async (req, res) => {
     switch (method) {
         case 'GET':
             await getAllJobs(req, res);
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
             break;
         default:
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: 400 });
             res.status(400).json({ success: false, message: 'Invalid Request' });
     }
 }
@@ -32,7 +35,7 @@ const getAllJobs = async (req, res) => {
     await ConnectDB();
     try {
         const gettingjobs = await Job.find({}).populate('user');
-        logger.info('All jobs fetched successfully', gettingjobs);
+        logger.info('All jobs fetched successfully');
         return res.status(200).json({ success: true, data: gettingjobs })
     } catch (error) {
         console.log('Error in getting a job (server) => ', error);

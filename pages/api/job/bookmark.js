@@ -46,7 +46,7 @@ import validateToken from '@/middleware/tokenValidation';
 import bookMarkJob from '@/models/Bookmark';
 import Joi from 'joi';
 import logger from '@/Utils/logger';
-import { log } from 'winston';
+import { httpRequestCount } from '../metrics';
 
 const schema = Joi.object({
     user: Joi.required(),
@@ -58,20 +58,24 @@ export default async (req, res) => {
     switch (req.method) {
         case "POST":
             await validateToken(req, res, async () => {
+                httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
                 await bookmark_my_job(req, res);
             });
             break;
         case "GET":
             await validateToken(req, res, async () => {
+                httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
                 await getBookmark_jobs(req, res);
             });
             break;
         case "DELETE":
             await validateToken(req, res, async () => {
+                httpRequestCount.inc({ method: req.method, route: req.url, statusCode: res.statusCode });
                 await delete_bookmark_job(req, res);
             });
             break;
         default:
+            httpRequestCount.inc({ method: req.method, route: req.url, statusCode: 405 });
             return res.status(405).end(`Method ${req.method} Not Allowed`)
     }
 }
