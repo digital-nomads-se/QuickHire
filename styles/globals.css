@@ -4,9 +4,9 @@
 @tailwind utilities;
 
 .dream-job-section {
-    background: url('https://media.istockphoto.com/id/1293704383/photo/doors-decisions-choices-minimal-design-with-cloud.webp?b=1&s=170667a&w=0&k=20&c=dSVOs3OgVbF2VrhlFYD3ahnDmNkSM4zU1m4JBCiMHSE=') no-repeat center center;
+    background: url('https://images.unsplash.com/uploads/141103282695035fa1380/95cdfeef?q=80&w=2030&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
     background-size: cover; /* Ensures the background covers the entire section */
     position: relative; /* If you're using overlay effects */
-    color: #fff; /* Adjust text color to white or as needed for contrast */
+    color: rgb(57, 56, 56); /* Adjust text color to white or as needed for contrast */
     min-height: 300px; /* Adjust to your preference */
 }

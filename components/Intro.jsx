@@ -23,8 +23,8 @@ export default function Intro() {
       <br /><br /><br />
       <section class="dream-job-section text-center py-5">
         <div class="container">
-          <h1 class="display-4" style={{ color: 'black' }}>Your Dream Job. Now.</h1>
-          <p class="lead" style={{ color: 'black' }}>Showcase yourself to a curated list of top companies</p>
+          <h1 class="display-4">Your Dream Job. Now.</h1>
+          <p class="lead">Showcase yourself to a curated list of top companies</p>
         </div>
       </section>
       <hr />

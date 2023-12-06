@@ -77,7 +77,7 @@ export default function NavBar() {
         <>
             <div className={`w-full ${scrolled ? "bg-gray-600/70" : "bg-gray-600"} px-6 h-20 text-white flex items-center justify-between fixed top-0 left-0 z-50`}>
                 <div className='px-2 h-full flex items-center justify-center'>
-                    <p className='uppercase font-semibold tracking-widest text-lg'>QUICK HIRE</p>
+                    <p className='uppercase font-semibold tracking-widest text-lg'>QuickHire</p>
                 </div>
                 <div className='px-2 h-full hidden items-center justify-center lg:flex'>
                     <Link href={'/'} className="px-3 mx-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >Home</Link>
