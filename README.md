@@ -22,7 +22,6 @@ Welcome to the QuickHire Hiring Platform, the next evolution in recruitment tech
 - *Sagar Patel:* Security, DevOps
 
 ## Project Plan
-
 - *Requirement Analysis:* Define platform functionality.
 - *Design Phase:* Wireframe and mockup creation.
 - *Development Phase:* Frontend and backend coding.
@@ -31,7 +30,6 @@ Welcome to the QuickHire Hiring Platform, the next evolution in recruitment tech
 - *Feedback & Iteration:* Post-launch refinements.
 
 ## Technology Stack
-
 - *Backend:* Python, Go, Node.js with Express.js.
 - *Frontend:* React.js.
 - *Database:* MySQL, MongoDB/CouchDB/CockroachDB.
@@ -47,3 +45,5 @@ Welcome to the QuickHire Hiring Platform, the next evolution in recruitment tech
 - *Miscellaneous:* GraphQL, Keycloak, OAuth2, Swagger.
 
   [![Build and Push Docker Image](https://github.com/digital-nomads-se/QuickHire/actions/workflows/node.js.yml/badge.svg)](https://github.com/digital-nomads-se/QuickHire/actions/workflows/node.js.yml)
+
+Ensure you have the necessary dependencies installed:
