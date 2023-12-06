@@ -118,13 +118,12 @@ const applyToJob = async (req, res) => {
             const { name, email, about, job, userEmail } = jobApplication;
             const { error } = schema.validate({ name, email, about, job, userEmail });
             if (error) return res.status(401).json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') });
+            
+            await kafkaProcessApplication.processApplication(jobApplication.email, jobApplication.job, resumeContent);
 
             const newJobApplication = AppliedJob.create(jobApplication);
-            logger.info('New job application created', jobApplication);
-            console.log('newPath', newPath);
-            
+            logger.info('New job application created', newJobApplication);
 
-            kafkaProcessApplication.processApplication(jobApplication.email, jobApplication.job, resumeContent);
             return res.status(200).json({ success: true, message: 'Job application submitted successfully !' });
         })
     } catch (error) {
