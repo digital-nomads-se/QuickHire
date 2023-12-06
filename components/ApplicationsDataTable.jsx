@@ -13,6 +13,8 @@ export default function ApplicationsDataTable({ application }) {
     // State for the data
     const [Data, setData] = useState([]);
 
+    const [matchingPercentages, setMatchingPercentages] = useState({});
+
     // Effect to update the data when the application prop changes
     useEffect(() => {
         setData(application)
@@ -29,7 +31,8 @@ export default function ApplicationsDataTable({ application }) {
         const data = { id, status: "approved" }
         const res = await change_application_status(data);
         if (res.success) {
-            router.push('/frontend/postedJob')
+            console.log('Changes status to Approved');
+            // router.push('/frontend/postedJob')
         } else {
             toast.error(res.message)
         }
@@ -40,7 +43,8 @@ export default function ApplicationsDataTable({ application }) {
         const data = { id, status: "rejected" }
         const res = await change_application_status(data);
         if (res.success) {
-            router.push('/frontend/postedJob')
+            console.log('Changes status to Rejected');
+            // router.push('/frontend/postedJob')
         } else {
             toast.error(res.message)
         }
@@ -56,17 +60,25 @@ export default function ApplicationsDataTable({ application }) {
         document.body.removeChild(link);
     }
 
-    const getMatchingPercentage = async (jobId, email) => {
+    const getMatchingPercentage = async (jobId, email, rowId) => {
         try {
-          const response = await fetch(`/api/redis?jobId=${jobId}&email=${email}`);
-          const data = await response.json();
-          console.log('Received redisValue:', data.value);
-          return data.value;
+            const response = await fetch(`/api/redis?jobId=${jobId}&email=${email}`);
+            const data = await response.json();
+            console.log('Received redisValue:', data.value);
+    
+            // Update the state with the new percentage
+            setMatchingPercentages(prevPercentages => ({
+                ...prevPercentages,
+                [rowId]: data.value
+            }));
+    
+            return data.value;
         } catch (error) {
-          console.error('Error in getMatchingPercentage:', error);
-          return 0;
+            console.error('Error in getMatchingPercentage:', error);
+            return 0;
         }
     };
+    
 
     const columns = [
         {
@@ -79,8 +91,15 @@ export default function ApplicationsDataTable({ application }) {
         },
         {
             name: 'Matching Percentage',
-            selector: row => <button onClick={() => getMatchingPercentage(row?.job, row?.email)} className=' w-20 py-2 text-xs text-black hover:text-white my-2 hover:bg-black border border-black rounded transition-all duration-700'>Get Percentage</button>
-        },
+            cell: row => (
+                matchingPercentages[row._id] !== undefined
+                ? <span>{matchingPercentages[row._id]}%</span>
+                : <button onClick={() => getMatchingPercentage(row.job, row.email, row._id)}
+                    className='py-2 mx-2 text-xs text-black hover:text-white my-2 mt-2 mb-2 hover:bg-black border border-black rounded transition-all duration-700'>
+                    Calculate Percentage
+                </button>
+            )
+        },        
         {
             name: 'Status',
             selector: row => <p className={`uppercase font-semibold ${row?.status === "approved" ? "text-green-500" : ""}  ${row?.status === "rejected" ? "text-red-600" : ""}`}>{row?.status}</p>,
