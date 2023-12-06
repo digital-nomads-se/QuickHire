@@ -81,7 +81,6 @@ export default async (req, res) => {
 const postAJob = async (req, res) => {
     await ConnectDB();
     const data = req.body;
-
     const session = await getSession(req, res);
     
     if (!session || !session.user) {
@@ -90,7 +89,6 @@ const postAJob = async (req, res) => {
     }
 
     const userEmail = session.user.email;
-    
     const { title, description, salary, company, email, job_category, job_type, job_experience, job_vacancy, job_deadline } = data;
     const { error } = schema.validate({ userEmail, title, description, salary, company, email, job_category, job_type, job_experience, job_vacancy, job_deadline });
     if (error) return res.status(401).json({ success: false, message: error.details[0].message.replace(/['"]+/g, '') });

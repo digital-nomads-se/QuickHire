@@ -19,7 +19,6 @@
  */
 
 import ConnectDB from '@/DB/connectDB';
-import validateToken from '@/middleware/tokenValidation';
 import ApplyJob from '@/models/ApplyJob';
 import logger from '@/Utils/logger';
 import { httpRequestCount } from '../metrics';

@@ -36,7 +36,6 @@ export default function ApplicationsDataTable({ application }) {
         } else {
             toast.error(res.message)
         }
-
     }
 
     const handleRejectStatus = async (id) => {
@@ -79,7 +78,6 @@ export default function ApplicationsDataTable({ application }) {
         }
     };
     
-
     const columns = [
         {
             name: 'Name',

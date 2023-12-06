@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react'
 import { BsFillBookmarkStarFill } from 'react-icons/bs'
 import { GiSuitcase } from 'react-icons/gi'
 import { RevolvingDot } from 'react-loader-spinner'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 export default function Dashboard() {
   const [showTable, setShowTable] = useState('appliedJobs')
