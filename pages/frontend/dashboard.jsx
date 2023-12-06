@@ -22,7 +22,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!user) {
-      router.push('/auth/login')
+      router.push('/api/auth/login')
     }
   }, [user])
 
@@ -41,7 +41,7 @@ export default function Dashboard() {
       setLoading(false)
     }
     else {
-      router.push('/auth/login')
+      router.push('/')
     }
   }
 
@@ -70,7 +70,7 @@ export default function Dashboard() {
                 <div onClick={() => setShowTable('savedJobs')} className='py-2 cursor-pointer border-b-teal-600 border-b-2 px-2 w-60 h-32 rounded mx-2 my-2 bg-white flex items-center justify-center hover:bg-gray-200'>
                   <BsFillBookmarkStarFill className='bg-gray-50 text-black rounded-full w-10 h-10' />
                   <div className='flex  flex-col items-start mx-2 justify-start px-2 '>
-                    <p className='text-xl font-semibold'>Save Jobs</p>
+                    <p className='text-xl font-semibold'>Saved Jobs</p>
                   </div>
                 </div>
 

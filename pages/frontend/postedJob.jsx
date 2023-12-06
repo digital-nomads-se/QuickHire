@@ -18,7 +18,7 @@ export default function PostedJobs() {
 
     useEffect(() => {
         if (!user) {
-            router.push('/auth/login')
+            router.push('/api/auth/login')
         }
     }, [user])
 

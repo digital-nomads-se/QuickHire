@@ -14,7 +14,7 @@ export default function ApplicationsDetail() {
 
     useEffect(() => {
         if (!user) {
-            router.push('/auth/login')
+            router.push('/api/auth/login')
         }
     }, [user])
     
