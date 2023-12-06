@@ -4,14 +4,14 @@ const kafka = require('kafka-node');
 function publishMessage(message) {
     console.log("Publishing message to Kafka..." + message);
     const user = new kafka.KafkaClient({
-        kafkaHost: 'pkc-4r087.us-west2.gcp.confluent.cloud:9092',
+        kafkaHost: process.env.KAFKA_BOOTSTRAP_SERVERS,
         sslOptions: {
             rejectUnauthorized: false
         },
         sasl: {
             mechanism: 'plain',
-            username: 'FTNK5ESZ5GMNZYM2',
-            password: 'z+RfoHQjCRBWwmTPDJaGHSfo+HPuQqWw33PRm2Mb0avCkSCiK988HHmB4w8xS5tz'
+            username: process.env.KAFKA_USERNAME,
+            password: process.env.KAFKA_PASSWORD
         }
     });
 
