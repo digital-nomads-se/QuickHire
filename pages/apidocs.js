@@ -6,7 +6,7 @@ const ApiDocs = ({ spec }) => (
 );
 
 export async function getServerSideProps() {
-  const res = await fetch('http://localhost:3000/api/docs');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/docs`);
   const spec = await res.json();
 
   return {
