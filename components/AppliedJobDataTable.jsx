@@ -1,4 +1,3 @@
-import { data } from 'autoprefixer';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
@@ -66,7 +65,6 @@ export default function AppliedJobDataTable() {
             }))
         }
     }, [search, Data])
-
 
     return (
         <>

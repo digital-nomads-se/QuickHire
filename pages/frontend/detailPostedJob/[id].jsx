@@ -2,11 +2,9 @@ import { get_all_applications } from '@/Services/job';
 import ApplicationsDataTable from '@/components/ApplicationsDataTable'
 import NavBar from '@/components/NavBar'
 import { useUser } from '@auth0/nextjs-auth0/client';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { RevolvingDot } from 'react-loader-spinner';
-import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import useSWR from 'swr'
 

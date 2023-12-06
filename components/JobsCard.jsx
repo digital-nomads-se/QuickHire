@@ -11,8 +11,7 @@ export default function JobsCard({ job, posted }) {
             <div className='mb-4 flex  items-center justify-center py-2 '>
                 <Image width={70} height={70} className="flex rounded-full " src={"/userimage.jpg"} alt="no image" />
                 <div className='flex flex-col mx-2 px-2'>
-                    <h1 className='text-xl md:text-2xl font-semibold'>{job?.userEmail}</h1>
-                    <p className='text-xs sm:text-sm md:text-base text-gray-800'>{job?.company}</p>
+                    <h1 className='text-xl md:text-2xl font-semibold'>{job?.company}</h1>
                 </div>
             </div>
             <div className='mb-4 flex   items-start justify-center py-2 flex-col'>
@@ -28,7 +27,6 @@ export default function JobsCard({ job, posted }) {
                 </div>
             </div>
             <div className='mb-4 flex flex-col md:flex-wrap md:flex-row w-full justify-between  items-center '>
-
                 <div className='mb-4 flex  items-start justify-center py-2 flex-col'>
                     <div className='flex px-6 rounded-2xl py-1 items-center justify-center bg-gray-600 text-white  '>
                         <p>{job?.title} </p>

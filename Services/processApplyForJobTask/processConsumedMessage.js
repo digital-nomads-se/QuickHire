@@ -1,4 +1,3 @@
-import {get_specified_job} from '../job/index';
 const jobengine = require('../processApplyForJobTask/jobEngine');
 const redisConn = require('../redis/redisFunctions');
 

@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import Job from './Job'
 import logger from '../Utils/logger.js';
 
 // Define the bookMarkSchema
