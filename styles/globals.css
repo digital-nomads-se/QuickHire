@@ -1,3 +1,12 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dream-job-section {
+    background: url('https://media.istockphoto.com/id/1293704383/photo/doors-decisions-choices-minimal-design-with-cloud.webp?b=1&s=170667a&w=0&k=20&c=dSVOs3OgVbF2VrhlFYD3ahnDmNkSM4zU1m4JBCiMHSE=') no-repeat center center;
+    background-size: cover; /* Ensures the background covers the entire section */
+    position: relative; /* If you're using overlay effects */
+    color: #fff; /* Adjust text color to white or as needed for contrast */
+    min-height: 300px; /* Adjust to your preference */
+}
