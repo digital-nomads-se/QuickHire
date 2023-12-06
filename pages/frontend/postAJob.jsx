@@ -1,7 +1,6 @@
 import NavBar from '@/components/NavBar'
 import Select from 'react-select'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { post_job } from '@/Services/job';
@@ -12,7 +11,6 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 export default function PostAJob() {
     const { user, errorMsg, isLoading } = useUser();
     const router = useRouter();
-
     const [formData, setFormData] = useState({ user: user?._id, title: "", salary: 0, email: "", company: "", description: "", job_category: "", job_type: "", job_experience: "", job_vacancy: 0, job_deadline: "" });
     const [error, setError] = useState({ user: "", title: "", salary: "", email: "", company: "", description: "", job_category: "", job_type: "", job_experience: "", job_vacancy: "", job_deadline: "" });
 
@@ -33,7 +31,6 @@ export default function PostAJob() {
             setError({ ...error, email: "Email Field is Required" })
             return;
         }
-
 
         if (!formData.company) {
             setError({ ...error, company: "company Field is required" })

@@ -20,8 +20,6 @@ import useSWR from 'swr'
 import { book_mark_job } from '@/Services/job/bookmark'
 import { useUser } from '@auth0/nextjs-auth0/client'
 
-
-
 export default function JobDetails() {
     const router = useRouter()
     const dispatch = useDispatch();
@@ -30,17 +28,13 @@ export default function JobDetails() {
     const machingData = useSelector(state => state?.Job?.matchingData)
     const user = useUser();
     const [JobDetails, setJobDetails] = useState(null);
-
     const { data, error, isLoading } = useSWR(`/get-specified-job`, () => get_specified_job(id));
-
 
     useEffect(() => {
         if (data) setJobDetails(data?.data)
     }, [data])
 
-
     if (error) toast.error(error)
-
 
     useEffect(() => {
         if (JobDetails) {
@@ -50,12 +44,10 @@ export default function JobDetails() {
         }
     }, [JobDetails, JobData, dispatch])
 
-
     const handleApply = () => {
         if (!user) return toast.error('Please Login First');
         router.push(`/frontend/applyJob/${id}`)
     }
-
 
     const handleBookMark = async () => {
 
@@ -96,7 +88,6 @@ export default function JobDetails() {
                                             <p className='font-semibold text-base mb-1' >{JobDetails?.title} </p>
                                             <p className=' text-sm text-gray-800 mb-1'>{JobDetails?.company}</p>
                                         </div>
-
                                     </div>
                                     <div className='md:px-4 mb-1 px-2 md:mx-2 flex flex-col items-start justify-center'>
                                         <div className='flex items-center justify-center mb-1'>
@@ -186,7 +177,6 @@ export default function JobDetails() {
                                                 return (
                                                     <div key={item?._id} className='md:w-96 w-full py-3 mx-4 my-2 flex items-center md:items-start px-6 justify-start md:justify-center flex-col rounded bg-gray-50'>
                                                         <div className='mb-4 flex px-4 flex-col md:flex-row items-center justify-start py-2 '>
-                                                            <Image width={70} height={70} className="flex rounded-full mb-4 md:mb-0" src={"https://xsgames.co/randomusers/avatar.php?g=male"} alt="no image" />
                                                             <div className='flex flex-col w-full mx-2 px-2'>
                                                                 <h1 className='text-base md:text-left text-center  md:text-2xl font-semibold'>{item?.title}</h1>
                                                                 <p className='text-xs md:text-left text-center sm:text-sm md:text-base text-gray-800'>{item?.company}</p>

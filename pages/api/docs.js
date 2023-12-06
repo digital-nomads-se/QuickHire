@@ -1,7 +1,6 @@
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import logger from '@/Utils/logger';
-import { httpRequestCount } from './metrics';
 import withMetrics from '../../Utils/withMetrics';
 
 const swaggerOptions = {

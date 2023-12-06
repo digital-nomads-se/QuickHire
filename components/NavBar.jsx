@@ -1,9 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BiLogOut } from 'react-icons/bi';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { setUserData } from '@/Utils/UserSlice';
@@ -15,21 +14,12 @@ export default function NavBar() {
     const dispatch = useDispatch();
     const [openJobs, setOpenJobs] = useState(false)
     const { user, error, isLoading } = useUser();
-
-    // useEffect(() => {
-    //     dispatch(setUserData(localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null));
-    // }, [dispatch])
-
-
     const Router = useRouter();
-    // const user = useSelector(state => state.User.userData)
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, isScrolled] = useState(false);
 
-
     const useOutsideClick = (callback) => {
         const ref = React.useRef();
-
         React.useEffect(() => {
             const handleClick = (event) => {
                 if (ref.current && !ref.current.contains(event.target)) {
@@ -38,15 +28,12 @@ export default function NavBar() {
             };
 
             document.addEventListener('click', handleClick, true);
-
             return () => {
                 document.removeEventListener('click', handleClick, true);
             };
         }, [ref]);
-
         return ref;
     };
-
 
     useEffect(() => {
         window.addEventListener('scroll', () => {
@@ -67,7 +54,6 @@ export default function NavBar() {
         }
     }, [scrolled])
 
-
     const handleClickOutside = () => {
         setIsOpen(false);
     };
@@ -80,12 +66,29 @@ export default function NavBar() {
                     <p className='uppercase font-semibold tracking-widest text-lg'>QUICK HIRE</p>
                 </div>
                 <div className='px-2 h-full hidden items-center justify-center lg:flex'>
-                    <Link href={'/'} className="px-3 mx-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >Home</Link>
-                    <Link href={'/frontend/postAJob'} className="px-3 mx-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >Post Jobs</Link>
-                    <Link href={'/frontend/displayJobs'} className="px-3 mx-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >View Jobs</Link>
-                    <Link href={'/frontend/postedJob'} className="px-3 mx-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >Posted Jobs</Link>
-                    <Link href={'/frontend/dashboard'} className="px-3 mx-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >Dashboard</Link>
-                    {/* <Link href={'/'} className="px-3 mx-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >Contact</Link> */}
+                    {user && (
+                        <>
+                            <Link href={'/'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >Home</Link>
+                        </>
+                    )}
+
+                    <Link href={'/frontend/displayJobs'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >View Jobs</Link>
+
+                    {user && user.email == 'sagarapatel03@gmail.com' && (
+                        <>
+                            <Link href={'/frontend/postedJob'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >Posted Jobs</Link>
+                        </>
+                    )}
+                    {user && user.email == 'sagarapatel03@gmail.com' && (
+                        <>
+                            <Link href={'/frontend/postAJob'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >Post Jobs</Link>
+                        </>
+                    )}
+                    {user && user.email != 'sagarapatel03@gmail.com' && (
+                        <>
+                            <Link href={'/frontend/dashboard'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >My Items</Link>
+                        </>
+                    )}
                 </div>
                 <div className='px-2 h-full hidden items-center justify-center lg:flex ' >
                     {
@@ -117,19 +120,19 @@ export default function NavBar() {
                     isOpen && (
                         <div ref={ref} className='flex w-full py-2 animate-fade-in-down  bg-gray-600/70 transition-all fade duration-1000 absolute top-20 left-0  items-center justify-center flex-col '>
                             <div className='px-2 h-full flex items-center justify-center flex-col py-2 '>
-                                <Link href={'/'} onClick={() => setIsOpen(false)} className="px-3  m-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >Home</Link>
-                                <button onClick={() => setOpenJobs(state => !state)} className="px-3  m-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase flex items-center justify-center" >Jobs {openJobs ? <AiFillCaretUp /> : <AiFillCaretDown />} </button>
+                                <Link href={'/'} onClick={() => setIsOpen(false)} className="px-3  m-4 text-base font-medium transition-all duration-700 uppercase" >Home</Link>
+                                <button onClick={() => setOpenJobs(state => !state)} className="px-3  m-4 text-base font-medium transition-all duration-700 uppercase flex items-center justify-center" >Jobs {openJobs ? <AiFillCaretUp /> : <AiFillCaretDown />} </button>
 
                                 {
                                     openJobs &&
                                     <>
-                                        <Link href={'/frontend/displayJobs'} onClick={() => setIsOpen(false)} className="px-3 m-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >View Jobs</Link>
-                                        <Link href={'/frontend/postAJob'} onClick={() => setIsOpen(false)} className="px-3 m-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >Post Jobs</Link>
-                                        <Link href={'/frontend/postedJob'} onClick={() => setIsOpen(false)} className="px-3 m-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >Posted Jobs</Link>
+                                        <Link href={'/frontend/displayJobs'} onClick={() => setIsOpen(false)} className="px-3 m-4 text-base font-medium transition-all duration-700 uppercase" >View Jobs</Link>
+                                        <Link href={'/frontend/postAJob'} onClick={() => setIsOpen(false)} className="px-3 m-4 text-base font-medium transition-all duration-700 uppercase" >Post Jobs</Link>
+                                        <Link href={'/frontend/postedJob'} onClick={() => setIsOpen(false)} className="px-3 m-4 text-base font-medium transition-all duration-700 uppercase" >Posted Jobs</Link>
                                     </>
                                 }
-                                <Link href={'/frontend/dashboard'} onClick={() => setIsOpen(false)} className="px-3 m-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >Dashboard</Link>
-                                {/* <Link href={'/'} onClick={() => setIsOpen(false)} className="px-3 m-4 text-base font-medium transition-all duration-700 hover:translate-y-2 uppercase" >Contact</Link> */}
+                                <Link href={'/frontend/dashboard'} onClick={() => setIsOpen(false)} className="px-3 m-4 text-base font-medium transition-all duration-700 uppercase" >Dashboard</Link>
+                                {/* <Link href={'/'} onClick={() => setIsOpen(false)} className="px-3 m-4 text-base font-medium transition-all duration-700 uppercase" >Contact</Link> */}
                             </div>
                             <div className='px-2 h-full  items-center justify-center flex' >
                                 {

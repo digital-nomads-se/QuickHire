@@ -37,7 +37,6 @@ export default async (req, res) => {
     }
 }
 
-
 const getApplicationDetail = async (req, res) => {
     const data = req.query;
     const id = data?.id

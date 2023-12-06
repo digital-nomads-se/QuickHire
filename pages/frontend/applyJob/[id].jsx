@@ -3,7 +3,7 @@ import { apply_job } from '@/Services/job';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -16,15 +16,10 @@ export default function ApplyJob() {
     const [formikData, setFormikData] = useState({ name: '', email: user?.email, about: '', job: id, user: activeUser?._id })
     const [file, setFile] = useState(null)
     const [error, setError] = useState({ name: '', email: "", about: '', job: '', user: '', cv: '' });
-
-
     const { name, email, about, job } = formikData;
-
+    
     const handleSubmit = async (e) => {
-
         e.preventDefault();
-
-
 
         if (!name) {
             setError({ ...error, name: "Name Field is required" })
@@ -60,9 +55,6 @@ export default function ApplyJob() {
             return;
         }
 
-
-
-
         const form = new FormData();
         form.append('name', name);
         form.append('email', email);
@@ -71,23 +63,17 @@ export default function ApplyJob() {
         form.append('user', user);
         form.append('cv', file);
 
-
         const res = await apply_job(form);
         if (res.success) {
             toast.success('Your Application is Submitted , Redirecting ... ')
             setTimeout(() => {
-                router.push('/')
+                router.push('/frontend/dashboard')
             }, 1000);
 
         } else {
             toast.error('Something Went Wrong')
         }
-
-
-
     }
-
-
 
     return (
         <>
