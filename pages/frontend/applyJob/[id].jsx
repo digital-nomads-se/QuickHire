@@ -96,7 +96,7 @@ export default function ApplyJob() {
                         }
                     </div>
                     <div className='w-full mb-4  flex flex-col items-start justify-center'>
-                        <label htmlFor="description" className='mb-1 text-base font-semibold'>About :</label>
+                        <label htmlFor="description" className='mb-1 text-base font-semibold'>Why do you think you are a good fit for this role? :</label>
                         <textarea name='about' onChange={(e) => setFormikData({ ...formikData, about: e.target.value })} type="description" id='description' className='w-full py-2 px-3 mb-2 border border-black rounded' placeholder='Enter description' />
                         {
                             error.about && <p className="text-sm text-red-500">{error.about}</p>
