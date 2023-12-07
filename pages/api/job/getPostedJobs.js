@@ -19,7 +19,6 @@
  */
 
 import ConnectDB from '@/DB/connectDB';
-import validateToken from '@/middleware/tokenValidation';
 import Job from '@/models/Job';
 import logger from '@/Utils/logger';
 import { httpRequestCount } from '../metrics';
@@ -46,7 +45,7 @@ const getPostedJobs = async (req, res) => {
     if (!id) return res.status(400).json({ success: false, message: "Please Login" })
     try {
         const gettingjobs = await Job.find({ userEmail: id });
-        logger.info('All posted jobs fetched successfully', gettingjobs);
+        logger.info('All posted jobs fetched successfully');
         return res.status(200).json({ success: true, data: gettingjobs })
     } catch (error) {
         console.log('Error in getting a specifed Job job (server) => ', error);
