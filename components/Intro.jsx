@@ -48,7 +48,7 @@ export default function Intro() {
 
       <footer className="bg-light py-4">
         <div className="container text-center">
-          <p>&copy; 2023 Instahyre - Your Dream Job Awaits</p>
+          <p>&copy; 2023 QuickHire - Your Dream Job Awaits</p>
         </div>
       </footer>
 

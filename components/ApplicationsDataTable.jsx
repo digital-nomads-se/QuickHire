@@ -97,10 +97,6 @@ export default function ApplicationsDataTable({ application }) {
                     Calculate Percentage
                 </button>
             )
-        },        
-        {
-            name: 'Status',
-            selector: row => <p className={`uppercase font-semibold ${row?.status === "approved" ? "text-green-500" : ""}  ${row?.status === "rejected" ? "text-red-600" : ""}`}>{row?.status}</p>,
         },
         {
             name: 'CV',
