@@ -71,9 +71,11 @@ export default function NavBar() {
                             <Link href={'/'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >Home</Link>
                         </>
                     )}
-
-                    <Link href={'/frontend/displayJobs'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >View Jobs</Link>
-
+                    {user && user.email != 'sagarapatel03@gmail.com' && (
+                        <>
+                            <Link href={'/frontend/displayJobs'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >View Jobs</Link>
+                        </>
+                    )}
                     {user && user.email == 'sagarapatel03@gmail.com' && (
                         <>
                             <Link href={'/frontend/postedJob'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >Posted Jobs</Link>
@@ -81,12 +83,12 @@ export default function NavBar() {
                     )}
                     {user && user.email == 'sagarapatel03@gmail.com' && (
                         <>
-                            <Link href={'/frontend/postAJob'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >Post Jobs</Link>
+                            <Link href={'/frontend/postAJob'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >Post New Job</Link>
                         </>
                     )}
                     {user && user.email != 'sagarapatel03@gmail.com' && (
                         <>
-                            <Link href={'/frontend/dashboard'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >My Items</Link>
+                            <Link href={'/frontend/dashboard'} className="px-3 mx-4 text-base font-medium transition-all duration-700 uppercase" >My Jobs</Link>
                         </>
                     )}
                 </div>
@@ -153,7 +155,6 @@ export default function NavBar() {
                         </div>
                     )
                 }
-
             </div>
         </>
     )
