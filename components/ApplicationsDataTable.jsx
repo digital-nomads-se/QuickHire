@@ -93,14 +93,14 @@ export default function ApplicationsDataTable({ application }) {
                 matchingPercentages[row._id] !== undefined
                 ? <span>{matchingPercentages[row._id]}%</span>
                 : <button onClick={() => getMatchingPercentage(row.job, row.email, row._id)}
-                    className='py-2 mx-2 text-xs text-black hover:text-white my-2 mt-2 mb-2 hover:bg-black border border-black rounded transition-all duration-700'>
+                    className='py-2 mx-2 text-xs text-black hover:text-white my-2 mt-2 mb-2 hover:bg-gray-600/70 border border-black rounded transition-all duration-700'>
                     Calculate Percentage
                 </button>
             )
         },
         {
             name: 'CV',
-            selector: row => <button onClick={() => handleDownloadCV(row?.cv)} className=' w-20 py-2 text-xs text-black hover:text-white my-2 hover:bg-black border border-black rounded transition-all duration-700'>Download CV</button>
+            selector: row => <button onClick={() => handleDownloadCV(row?.cv)} className=' w-20 py-2 text-xs text-black hover:text-white my-2 hover:bg-gray-600/70 border border-black rounded transition-all duration-700'>Download CV</button>
         },
         {
             name: 'Status',
